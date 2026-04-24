@@ -1,6 +1,5 @@
 from tkinter import *
 from tkinter import messagebox as mb
-from A1Z26 import a1z26_run as azrun
 
 
 root = Tk()
@@ -104,7 +103,8 @@ def decode_morz(lan, fraza):
                 decoded_letter = morse_dict.get(letter, '')
                 decoded_letters.append(decoded_letter)
             except KeyError:
-                pass
+                mb.showerror(title = "Ошибка",
+                             message = "Язык не распознан!")
         decoded_word = ''.join(decoded_letters)
         decoded_words.append(decoded_word)
     s.configure(text = ' '.join(decoded_words).strip())
@@ -324,18 +324,38 @@ def coding(lan, code, string):
                     res = res[:-1] + ' '
                 else:
                     if i not in symbol:
-                        res += str(ru_alphabet.index(i)) + '-'
+                        try:
+                            res += str(ru_alphabet.index(i)) + '-'
+                        except ValueError:
+                            mb.showerror(title = "Ошибка",
+                                         message = f"Неизвесный символ {i}!")
+                            break
                     else:
-                        res += i
+                        try:
+                            res += i
+                        except ValueError:
+                            mb.showerror(title = "Ошибка",
+                                         message = f"Неизвесный символ {i}!")
+                            break
         else:
             for i in string:
                 if i == ' ':
                     res = res[:-1] + ' '
                 else:
                     if i not in symbol:
-                        res += str(en_alphabet.index(i)) + '-'
+                        try:
+                            res += str(en_alphabet.index(i)) + '-'
+                        except ValueError:
+                            mb.showerror(title = "Ошибка",
+                                         message = f"Неизвесный символ {i}!")
+                            break
                     else:
-                        res += i
+                        try:
+                            res += i
+                        except ValueError:
+                            mb.showerror(title = "Ошибка",
+                                         message = f"Неизвесный символ {i}!")
+                            break
     else:
         string1 = string.split(' ')
 
@@ -346,10 +366,20 @@ def coding(lan, code, string):
                 for k in j:
                     if k not in symbol:
                         if len(j) - 1 == len(temp):
-                            temp += ru_alphabet[int(k)]
+                            try:
+                                temp += ru_alphabet[int(k)]
+                            except ValueError:
+                                mb.showerror(title = "Ошибка",
+                                             message = f"Невозможно перевести символ {i} в число!")
+                                break
                             temp += ' '
                         else:
-                            temp += ru_alphabet[int(k)]
+                            try:
+                                temp += ru_alphabet[int(k)]
+                            except ValueError:
+                                mb.showerror(title = "Ошибка",
+                                             message = f"Невозможно перевести символ {i} в число!")
+                                break
                     else:
                         temp += ' ' + k
                 res += temp
@@ -360,10 +390,20 @@ def coding(lan, code, string):
                 for k in j:
                     if k not in symbol:
                         if len(j) - 1 == len(temp):
-                            temp += en_alphabet[int(k)]
+                            try:
+                                temp += en_alphabet[int(k)]
+                            except ValueError:
+                                mb.showerror(title = "Ошибка",
+                                             message = f"Невозможно перевести символ {i} в число!")
+                                break
                             temp += ' '
                         else:
-                            temp += en_alphabet[int(k)]
+                            try:
+                                temp += en_alphabet[int(k)]
+                            except ValueError:
+                                mb.showerror(title = "Ошибка",
+                                             message = f"Невозможно перевести символ {i} в число!")
+                                break
                     else:
                         temp += k
                 res += temp
